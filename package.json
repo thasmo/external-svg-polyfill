@@ -1,0 +1,43 @@
+{
+  "name": "@thasmo/external-svg-polyfill",
+  "description": "Polyfills support for referencing external SVG files.",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "module/",
+  "typings": "module/",
+  "browser": "browser/bundle.js",
+  "repository": "thasmo/external-svg-polyfill",
+  "bugs": "https://github.com/thasmo/external-svg-polyfill/issues",
+  "homepage": "https://github.com/thasmo/external-svg-polyfill/#readme",
+  "keywords": [
+	"external",
+	"svg",
+	"polyfill",
+	"inline",
+	"embed",
+	"legacy"
+  ],
+  "author": {
+	"name": "Thomas Deinhamer",
+	"email": "hi@thasmo.com",
+	"url": "https://thasmo.com/"
+  },
+  "scripts": {
+	"start": "concurrently \"tsc --watch\" \"rollup --config --watch\" \"browser-sync start --config .browsersyncrc.json\"",
+    "build": "tsc",
+    "bundle": "rollup --config"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24.7",
+    "concurrently": "^4.0.1",
+    "rollup": "^0.66.2",
+    "rollup-plugin-terser": "^3.0.0",
+    "rollup-plugin-typescript": "^1.0.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.0.3"
+  },
+  "files": [
+	"browser/",
+	"module/"
+  ]
+}

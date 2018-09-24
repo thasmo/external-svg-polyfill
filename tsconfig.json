@@ -1,0 +1,24 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"module": "es6",
+		"outDir": "module/",
+		"moduleResolution": "node",
+		"newLine": "lf",
+		"rootDir": "src/",
+		"declaration": true,
+		"allowJs": false,
+		"checkJs": false,
+		"removeComments": true,
+		"strictNullChecks": true,
+		"alwaysStrict": true,
+		"allowUnreachableCode": true,
+		"noImplicitAny": true,
+		"noUnusedParameters": false,
+		"noUnusedLocals": true,
+		"noEmitOnError": true,
+		"noImplicitThis": true,
+		"noFallthroughCasesInSwitch": true,
+		"preserveWatchOutput": true
+	}
+}

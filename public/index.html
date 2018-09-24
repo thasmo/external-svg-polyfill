@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>External SVG Polyfill</title>
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				height: 100vh;
+				margin: 0;
+				padding: 10vw;
+			}
+
+			main {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
+			}
+
+			svg {
+				flex-basis: auto;
+				flex-shrink: 1;
+				flex-grow: 1;
+				width: 33vw;
+			}
+		</style>
+
+		<script src="/browser/bundle.js"></script>
+		<script>
+			window.document.addEventListener('DOMContentLoaded', function() {
+				var polyfill = new Polyfill({
+					detect: false,
+				});
+
+				window.setTimeout(function() {
+					polyfill.destroy();
+				}, 1000)
+			});
+		</script>
+	</head>
+
+	<body>
+		<main>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use href="/browsers.svg#firefox"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use href="/browsers.svg#opera"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use href="/browsers.svg#brave"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use href="/bundlers.svg#webpack"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use href="/bundlers.svg#rollup"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use href="/bundlers.svg#browserify"></use>
+			</svg>
+		</main>
+	</body>
+</html>

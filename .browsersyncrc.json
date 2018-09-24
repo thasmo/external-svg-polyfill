@@ -1,0 +1,12 @@
+{
+	"server": {
+		"baseDir": "public/",
+		"routes": {
+			"/browser/": "browser/"
+		}
+	},
+	"https": true,
+	"cors": true,
+	"notify": false,
+	"reloadOnRestart": false
+}
