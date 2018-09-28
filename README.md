@@ -42,18 +42,23 @@ polyfill.destroy();
 ### Options
 
 **context** `node`  
+*Defines the context in which to search for SVG use elements.*  
 *default* `window.document.body || window.document.documentElement`
 
 **root** `node`  
+*Defines the element to which prepend SVG embeds to.*  
 *default* `window.document.body || window.document.documentElement`
 
 **prefix** `boolean`  
+*Prefix `id` attribute values to ensure uniqueness. `false` won't change the attributes.*  
 *default* `true`
 
 **detect** `boolean`  
+*Detect browser-support automatically. `false` will run the polyfill in any browser.*  
 *default* `true`
 
 **observe** `boolean`  
+*Observe DOM changes within the `context` element and rerun the polyfill.*  
 *default* `true`
 
 ## Alternatives
@@ -66,6 +71,12 @@ polyfill.destroy();
 
 * Browser logos from [alrra/browser-logos](https://github.com/alrra/browser-logos).
 * Bundler logos from [gilbarbara/logos](https://github.com/gilbarbara/logos).
+* Browser testing via [browserstack](https://github.com/browserstack).
+
+## Testing
+
+[![BrowserStack](https://www.browserstack.com/images/mail/browserstack-logo-footer.png)](https://www.browserstack.com/)  
+[**BrowserStack**](https://www.browserstack.com/) loves open source and provides free manual and automated testing for this project! ❤️
 
 ---
 
