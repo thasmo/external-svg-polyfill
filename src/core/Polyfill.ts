@@ -153,7 +153,7 @@ export default class Polyfill {
 		}
 
 		(window.requestAnimationFrame || window.setTimeout)(() => {
-			this.options.root.insertBefore(file, window.document.body.firstChild);
+			this.options.root.insertBefore(file, this.options.root);
 		});
 	}
 }
