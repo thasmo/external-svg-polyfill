@@ -137,9 +137,10 @@ export default class Polyfill {
 		file.style.height = 0;
 
 		this.cache.files[address] = file;
-		this.parser.href = address;
 
 		if (this.options.replace) {
+			this.parser.href = address;
+
 			[].slice.call(file.querySelectorAll('[id]')).forEach((reference: HTMLElement) => {
 				const value = reference.getAttribute('id')!;
 				const identifier = this.generateIdentifier(value, this.parser.pathname.replace(/^\//, ''));
