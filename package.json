@@ -26,7 +26,7 @@
     "start": "concurrently \"tsc --watch\" \"rollup --config --watch\" \"browser-sync start --config .browsersyncrc.json\"",
     "build": "tsc",
     "bundle": "rollup --config",
-    "prepublish": "concurrently \"tsc\" \"rollup --config\""
+    "prepare": "concurrently \"tsc\" \"rollup --config\""
   },
   "devDependencies": {
     "browser-sync": "^2.24.7",
