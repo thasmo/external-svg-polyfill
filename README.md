@@ -1,14 +1,23 @@
 # External SVG Polyfill
-> Polyfills support for referencing [external SVG files](https://css-tricks.com/svg-use-external-source/).
+> Small and basic polyfill to support referencing [external SVG files](https://css-tricks.com/svg-use-external-source/).
+
+Browser like `IE9-IE11`, `Edge12`, `Safari 5.1-6`, or `UCWeb11`
+[do not support referencing external files](https://caniuse.com/#feat=svg) via location hash.
+Referencing external files can be especially useful when dealing with a technique called
+*SVG sprites*, where multiple SVG elements are stored within a single SVG file. It is possible
+to inline these *SVG sprites* into the HTML document itself, but this has several disadvantages
+i.e. caching issues, unneeded HTML file size growth, development inconviniences, etc.
+Externally referenced *SVG sprites* mitigate those problems but are not support in the mentioned browsers.
+
+**`external-svg-polyfill` embeds the referenced SVG files automatically.**
 
 **Implementation**
-* Supports `Internet Explorer 11`, `Safari 6` and `UCWeb 11` only.
-* User-agent sniffing is used to determine feature support.
+* User-agent sniffing (which can be disabled) is used to determine feature support.
 * External SVG files are fetched via `xhr` and embedded while `use` elements are updated.
-* To prevent naming collision issues, `id` attributes can be updated to a unique name.
-* New SVG `use` elements will be processed upon changes in the `DOM`.
-* Final file size is under 5 kiB minified.
-* Written in TypeScript.
+* To prevent naming collision issues, `id` attributes are updated to use a unique name.
+* Dynamically added SVG `use` elements are processed upon changes in the `DOM`.
+* File size is under 5 kiB minified to keep the load, parse and execution times low.
+* Project is written in TypeScript.
 
 ## Setup
 
@@ -20,6 +29,14 @@ npm install @thasmo/external-svg-polyfill
 ```
 
 ## Usage
+
+Just define some `svg use` elements in the HTML markup and let `external-svg-polyfill` do the rest.
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg">
+    <use href="assets/sprite.svg#icon"></use>
+</svg>
+```
 
 ### API
 ```js
@@ -65,19 +82,37 @@ polyfill.destroy();
 *Observe DOM changes within the `context` element and rerun the polyfill.*  
 *default* `true`
 
+## Compatibility
+
+`external-svg-polyfill` works in all browsers in general but polyfills the following.
+* `Internet Explorer 10` *tested*
+* `Internet Explorer 11` *tested*
+* `Safari 6` *untested*
+* `UCWeb 11` *untested*
+
 ## Alternatives
+
+Some alternatives exist and, in fact, `external-svg-polyfill` was greatly inspired by them. Check them out!
 
 * [**SVG for Everybody**](https://github.com/jonathantneal/svg4everybody) by [*Jonathan Neal*](https://github.com/jonathantneal)
 * [**svgxuse**](https://github.com/Keyamoon/svgxuse) by [*Keyamoon*](https://github.com/Keyamoon)
 * [**SVG\<use\>It**](https://github.com/sinnerschrader/svg-use-it) by [*SinnerSchrader*](https://github.com/sinnerschrader)
+* [**SVG Symbols Polyfill**](https://github.com/evan2x/svg-symbols-polyfill) by [*Evan*](https://github.com/evan2x)
+* [**SVGInjector**](https://github.com/iconic/SVGInjector) by [*iconic*](https://github.com/iconic)
 
-## Misc
+## Resources
+
+* [**SVG on the web - A Practical Guide**](https://svgontheweb.com/) by [*Jake Giltsoff*](https://twitter.com/jakegiltsoff)
+* [**SVG use with External Source**](https://css-tricks.com/svg-use-external-source/) by [*Chris Coyier*](https://twitter.com/chriscoyier)
+* [**SVG use with External Reference, Take 2**](https://css-tricks.com/svg-use-with-external-reference-take-2/) by [*Chris Coyier*](https://twitter.com/chriscoyier)
+* [**SVG Sprite Workflow That Works**](https://medium.com/@iamryanyu/svg-sprite-workflow-that-works-f5609d4d6144) by [*Ryan Yu*](https://twitter.com/iamryanyu)
+* [**svgomg**](https://jakearchibald.github.io/svgomg/) by [*Jake Archibald*](https://twitter.com/jaffathecake)
+
+## Credits
 
 * Browser logos from [alrra/browser-logos](https://github.com/alrra/browser-logos).
 * Bundler logos from [gilbarbara/logos](https://github.com/gilbarbara/logos).
 * Browser testing via [browserstack](https://github.com/browserstack).
-
-## Testing
 
 [![BrowserStack](https://www.browserstack.com/images/mail/browserstack-logo-footer.png)](https://www.browserstack.com/)  
 [**BrowserStack**](https://www.browserstack.com/) loves open source and provides free manual and automated testing for this project! ❤️
