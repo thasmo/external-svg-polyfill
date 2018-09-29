@@ -6,6 +6,7 @@ export default {
 		file: 'browser/bundle.js',
 		format: 'umd',
 		name: 'ExternalSvgPolyfill',
+		sourcemap: true,
 	},
 	plugins: [
 		typescript({
