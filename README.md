@@ -11,12 +11,12 @@ Externally referenced *SVG sprites* mitigate those problems but are not support 
 
 **`external-svg-polyfill` embeds the referenced SVG files automatically.**
 
-**Implementation**
+**Features**
 * User-agent sniffing (which can be disabled) is used to determine feature support.
 * External SVG files are fetched via `xhr` and embedded while `use` elements are updated.
 * To prevent naming collision issues, `id` attributes are updated to use a unique name.
 * Dynamically added SVG `use` elements are processed upon changes in the `DOM`.
-* File size is under 5 kiB minified to keep the load, parse and execution times low.
+* File size is ~ 3.5 KiB minified to keep the load, parse and execution times low.
 * Project is written in TypeScript.
 
 ## Setup
@@ -119,4 +119,4 @@ Some alternatives exist and, in fact, `external-svg-polyfill` was greatly inspir
 
 ---
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
