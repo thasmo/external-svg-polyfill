@@ -1,5 +1,5 @@
 # External SVG Polyfill
-> Small and basic polyfill to support referencing [external SVG files](https://css-tricks.com/svg-use-external-source/).
+> Small and basic polyfill to support referencing [external SVG files](https://css-tricks.com/svg-use-external-source/)
 
 Browser like `IE9-IE11`, `Edge12`, `Safari 5.1-6`, or `UCWeb11`
 [do not support referencing external files](https://caniuse.com/#feat=svg) via location hash.
@@ -110,9 +110,9 @@ Some alternatives exist and, in fact, `external-svg-polyfill` was greatly inspir
 
 ## Credits
 
-* Browser logos from [alrra/browser-logos](https://github.com/alrra/browser-logos).
-* Bundler logos from [gilbarbara/logos](https://github.com/gilbarbara/logos).
-* Browser testing via [browserstack](https://github.com/browserstack).
+* Browser logos from [alrra/browser-logos](https://github.com/alrra/browser-logos)
+* Bundler logos from [gilbarbara/logos](https://github.com/gilbarbara/logos)
+* Browser testing via [browserstack](https://github.com/browserstack)
 
 [![BrowserStack](https://www.browserstack.com/images/mail/browserstack-logo-footer.png)](https://www.browserstack.com/)  
 [**BrowserStack**](https://www.browserstack.com/) loves open source and provides free manual and automated testing for this project! ❤️
