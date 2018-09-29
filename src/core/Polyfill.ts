@@ -9,7 +9,7 @@ export default class Polyfill {
 	private elements: any = {};
 
 	private defaults: Options = {
-		elements: 'svg use',
+		target: 'svg use',
 		context: window.document.body || window.document.documentElement,
 		root: window.document.body || window.document.documentElement,
 		run: true,
@@ -18,11 +18,13 @@ export default class Polyfill {
 		observe: true,
 	};
 
+	private handlers = {
+		documentChange: this.onDocumentChanged.bind(this),
+	};
+
 	public constructor(options?: Options) {
 		this.set(options);
-
 		this.parser = window.document.createElement('a');
-
 		this.options.run && this.run();
 	}
 
@@ -41,18 +43,26 @@ export default class Polyfill {
 	}
 
 	public observe(): void {
-		this.observer = new MutationObserver(this.onDocumentChanged.bind(this));
+		if (typeof MutationObserver !== 'undefined') {
+			this.observer = new MutationObserver(this.handlers.documentChange);
 
-		this.observer.observe(this.options.context, {
-			childList: true,
-			subtree: true,
-			attributes: true,
-		});
+			this.observer.observe(this.options.context, {
+				childList: true,
+				subtree: true,
+				attributes: true,
+			});
+		} else {
+			this.options.context.addEventListener('DOMSubtreeModified', this.handlers.documentChange);
+		}
 	}
 
 	public unobserve(): void {
-		this.observer.disconnect();
-		delete this.observer;
+		if (typeof MutationObserver !== 'undefined') {
+			this.observer.disconnect();
+			delete this.observer;
+		} else {
+			this.options.context.removeEventListener('DOMSubtreeModified', this.handlers.documentChange);
+		}
 	}
 
 	public destroy(): void {
@@ -70,9 +80,9 @@ export default class Polyfill {
 	}
 
 	private updateElements(): void {
-		const elements = typeof this.options.elements === 'string'
-			? [].slice.call(this.options.context.querySelectorAll(this.options.elements))
-			: this.options.elements;
+		const elements = typeof this.options.target === 'string'
+			? [].slice.call(this.options.context.querySelectorAll(this.options.target))
+			: this.options.target;
 
 		elements.forEach(this.processElement.bind(this));
 	}
@@ -97,16 +107,18 @@ export default class Polyfill {
 
 	private loadFile(address: string): void {
 		const loader = new XMLHttpRequest();
-		loader.responseType = 'document';
-		loader.addEventListener('load', this.onFileLoaded.bind(this));
-		loader.addEventListener('error', console.error);
+		loader.addEventListener('load', (event: Event) => this.onFileLoaded.call(this, event, address));
 		loader.open('get', address);
+		loader.responseType = 'document';
 		loader.send();
 	}
 
-	private generateIdentifier(identifier: string, suffix: string): string {
+	private generateIdentifier(identifier: string, prefix: string): string {
+		identifier = identifier.replace('#', '');
+		prefix = prefix.replace(/^\//, '').replace(/\.svg$/, '').replace(/[^a-zA-Z0-9]/g, '-');
+
 		return this.options.replace
-			? `${identifier.replace('#', '')}-${suffix.replace(/[^a-zA-Z0-9]/g,'-')}`
+			? `${prefix}-${identifier}`
 			: identifier;
 	}
 
@@ -114,7 +126,7 @@ export default class Polyfill {
 		this.updateElements();
 	}
 
-	private onFileLoaded(event: Event): void {
+	private onFileLoaded(event: Event, address: string): void {
 		const file = (event.target as XMLHttpRequest).response.documentElement;
 		file.setAttribute('aria-hidden', 'true');
 		file.style.position = 'absolute';
@@ -122,17 +134,19 @@ export default class Polyfill {
 		file.style.width = 0;
 		file.style.height = 0;
 
-		this.parser.href = (event.target as XMLHttpRequest).responseURL;
-
-		const address = this.parser.href.split('#')[0];
 		this.files[address] = file;
+		this.parser.href = address;
 
 		if (this.options.replace) {
-			const elements = [].slice.call(file.querySelectorAll('symbol[id]'));
+			[].slice.call(file.querySelectorAll('[id]')).forEach((reference: HTMLElement) => {
+				const value = reference.getAttribute('id')!;
+				const identifier = this.generateIdentifier(value, this.parser.pathname.replace(/^\//, ''));
 
-			elements.forEach((element: HTMLElement) => {
-				const identifier = this.generateIdentifier(element.getAttribute('id')!, this.parser.pathname);
-				element.setAttribute('id', identifier);
+				reference.setAttribute('id', identifier);
+
+				[].slice.call(file.querySelectorAll(`[fill="url(#${value})"]`)).forEach((referencee: HTMLElement) => {
+					referencee.setAttribute('fill', `url(#${identifier})`);
+				});
 			});
 		}
 

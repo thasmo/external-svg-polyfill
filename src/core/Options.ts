@@ -1,5 +1,5 @@
 export default interface Options {
-	elements: string|SVGUseElement[]|NodeListOf<SVGUseElement>;
+	target: string|SVGUseElement[]|NodeListOf<SVGUseElement>;
 	context: HTMLElement;
 	root: HTMLElement;
 	run: boolean;

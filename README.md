@@ -41,11 +41,15 @@ polyfill.destroy();
 
 ### Options
 
-**context** `node`  
+**target** `string|SVGUseElement[]|NodeListOf<SVGUseElement>`  
+*Defines SVG `use` elements to process.*  
+*default* `svg use`
+
+**context** `HTMLElement`  
 *Defines the context in which to search for SVG use elements.*  
 *default* `window.document.body || window.document.documentElement`
 
-**root** `node`  
+**root** `HTMLElement`  
 *Defines the element to which prepend SVG embeds to.*  
 *default* `window.document.body || window.document.documentElement`
 

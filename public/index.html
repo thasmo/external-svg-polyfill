@@ -1,8 +1,8 @@
 <!doctype html>
-<html>
-	<head>
+	<html lang="en">
 		<meta charset="utf-8">
 		<title>External SVG Polyfill</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<style>
 			* {
@@ -33,13 +33,7 @@
 		<script src="/browser/bundle.js"></script>
 		<script>
 			window.document.addEventListener('DOMContentLoaded', function() {
-				var polyfill = new Polyfill({
-					detect: false,
-				});
-
-				window.setTimeout(function() {
-					polyfill.destroy();
-				}, 1000)
+				var polyfill = new ExternalSvgPolyfill.default();
 			});
 		</script>
 	</head>
