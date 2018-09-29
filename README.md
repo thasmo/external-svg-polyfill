@@ -1,4 +1,4 @@
-# External SVG Polyfill
+# External SVG Polyfill [![CDN](https://data.jsdelivr.com/v1/package/npm/@thasmo/external-svg-polyfill/badge?style=rounded)][cdn]
 > Small and basic polyfill to support referencing [external SVG files](https://css-tricks.com/svg-use-external-source/)
 
 Browser like `IE9-IE11`, `Edge12`, `Safari 5.1-6`, or `UCWeb11`
@@ -17,17 +17,22 @@ Externally referenced *SVG sprites* mitigate those problems but are not support 
 * To prevent naming collision issues, `id` attributes are updated to use a unique name.
 * Dynamically added SVG `use` elements are processed upon changes in the `DOM`.
 * File size is ~ 3.5 KiB minified to keep the load, parse and execution times low.
+* Script is not self-executing, it needs to be called explicitly.
 * Project is written in TypeScript.
 
 ## Setup
 
 ### Installation
 
-**npm**
+[**npm**][npm]
 ```sh
 npm install @thasmo/external-svg-polyfill
 ```
 
+[**CDN**][cdn]
+```html
+<script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@1/browser/bundle.min.js"></script>
+```
 ## Usage
 
 Just define some `svg use` elements in the HTML markup and let `external-svg-polyfill` do the rest.
@@ -120,3 +125,6 @@ Some alternatives exist and, in fact, `external-svg-polyfill` was greatly inspir
 ---
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+
+[npm]: https://www.npmjs.com/package/@thasmo/external-svg-polyfill
+[cdn]: https://www.jsdelivr.com/package/npm/@thasmo/external-svg-polyfill
