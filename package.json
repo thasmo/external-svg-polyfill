@@ -10,20 +10,20 @@
   "bugs": "https://github.com/thasmo/external-svg-polyfill/issues",
   "homepage": "https://github.com/thasmo/external-svg-polyfill/#readme",
   "keywords": [
-	"external",
-	"svg",
-	"polyfill",
-	"inline",
-	"embed",
-	"legacy"
+    "external",
+    "svg",
+    "polyfill",
+    "inline",
+    "embed",
+    "legacy"
   ],
   "author": {
-	"name": "Thomas Deinhamer",
-	"email": "hi@thasmo.com",
-	"url": "https://thasmo.com/"
+    "name": "Thomas Deinhamer",
+    "email": "hi@thasmo.com",
+    "url": "https://thasmo.com/"
   },
   "scripts": {
-	"start": "concurrently \"tsc --watch\" \"rollup --config --watch\" \"browser-sync start --config .browsersyncrc.json\"",
+    "start": "concurrently \"tsc --watch\" \"rollup --config --watch\" \"browser-sync start --config .browsersyncrc.json\"",
     "build": "tsc",
     "bundle": "rollup --config"
   },
@@ -34,10 +34,10 @@
     "rollup-plugin-terser": "^3.0.0",
     "rollup-plugin-typescript": "^1.0.0",
     "tslib": "^1.9.3",
-    "typescript": "^3.0.3"
+    "typescript": "^3.1.1"
   },
   "files": [
-	"browser/",
-	"module/"
+    "browser/",
+    "module/"
   ]
 }
