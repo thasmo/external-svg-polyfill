@@ -5,8 +5,10 @@ export default class Polyfill {
 	private options: Options;
 	private parser: HTMLAnchorElement;
 	private observer: MutationObserver;
-	private files: any = {};
-	private elements: any = {};
+	private cache: any = {
+		files: {},
+		elements: {},
+	};
 
 	private defaults: Options = {
 		target: 'svg use',
@@ -68,14 +70,14 @@ export default class Polyfill {
 	public destroy(): void {
 		this.unobserve();
 
-		Object.keys(this.elements).forEach((key) => {
-			(this.elements[key] as HTMLElement).setAttribute('href', key);
-			delete this.elements[key];
+		Object.keys(this.cache.elements).forEach((key) => {
+			(this.cache.elements[key] as HTMLElement).setAttribute('href', key);
+			delete this.cache.elements[key];
 		});
 
-		Object.keys(this.files).forEach((key) => {
-			this.options.root.removeChild(this.files[key]);
-			delete this.files[key];
+		Object.keys(this.cache.files).forEach((key) => {
+			this.options.root.removeChild(this.cache.files[key]);
+			delete this.cache.files[key];
 		});
 	}
 
@@ -93,15 +95,15 @@ export default class Polyfill {
 		if (value && value[0] !== '#' && (this.parser.href = value)) {
 			const address = this.parser.href.split('#')[0];
 
-			if (address && !this.files.hasOwnProperty(address)) {
-				this.files[address] = null;
+			if (address && !this.cache.files.hasOwnProperty(address)) {
+				this.cache.files[address] = null;
 				this.loadFile(address);
 			}
 
 			const identifier = this.generateIdentifier(this.parser.hash, this.parser.pathname);
 			element.setAttribute('href', `#${identifier}`);
 
-			this.elements[value] = element;
+			this.cache.elements[value] = element;
 		}
 	}
 
@@ -134,7 +136,7 @@ export default class Polyfill {
 		file.style.width = 0;
 		file.style.height = 0;
 
-		this.files[address] = file;
+		this.cache.files[address] = file;
 		this.parser.href = address;
 
 		if (this.options.replace) {
