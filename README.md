@@ -1,4 +1,4 @@
-# External SVG Polyfill [![CDN](https://data.jsdelivr.com/v1/package/npm/@thasmo/external-svg-polyfill/badge?style=rounded)][cdn]
+# External SVG Polyfill [![npm][npm-badge]][npm] [![CDN][cdn-badge]][cdn]
 > Small and basic polyfill to support referencing [external SVG files](https://css-tricks.com/svg-use-external-source/)
 
 Browser like `IE9-IE11`, `Edge12`, `Safari 5.1-6`, or `UCWeb11`
@@ -127,4 +127,6 @@ Some alternatives exist and, in fact, `external-svg-polyfill` was greatly inspir
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
 [npm]: https://www.npmjs.com/package/@thasmo/external-svg-polyfill
+[npm-badge]: https://img.shields.io/npm/v/@thasmo/external-svg-polyfill.svg
 [cdn]: https://www.jsdelivr.com/package/npm/@thasmo/external-svg-polyfill
+[cdn-badge]: https://data.jsdelivr.com/v1/package/npm/@thasmo/external-svg-polyfill/badge?style=rounded
