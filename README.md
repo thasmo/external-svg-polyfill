@@ -76,9 +76,9 @@ new ExternalSvgPolyfill();
 
 | option | description | type | default |
 |--------|-------------|------|---------|
-| **target** | *Defines SVG `use` elements to process.* | `string|SVGUseElement[]|NodeListOf<SVGUseElement>` | `svg use` |
-| **context** | *Defines the context in which to search for SVG use elements.* | `HTMLElement` | `window.document.body || window.document.documentElement` |
-| **root** | *Defines the element to which prepend SVG embeds to.* | `HTMLElement` | `window.document.body || window.document.documentElement` |
+| **target** | *Defines SVG `use` elements to process.* | `string`, `SVGUseElement[]`, `NodeListOf<SVGUseElement>` | `svg use` |
+| **context** | *Defines the context in which to search for SVG use elements.* | `HTMLElement` | `window.document.body ?: window.document.documentElement` |
+| **root** | *Defines the element to which prepend SVG embeds to.* | `HTMLElement` | `window.document.body ?: window.document.documentElement` |
 | **prefix** | *Prefix `id` attribute values to ensure uniqueness. `false` won't change the attributes.* | `boolean` | `true` |
 | **detect** | *Detect browser-support automatically. `false` will run the polyfill in any browser.* | `boolean` | `true` |
 | **observe** | *Observe DOM changes within the `context` element and rerun the polyfill.* | `boolean` | `true` |
