@@ -66,37 +66,22 @@ new ExternalSvgPolyfill();
 
 | method | description |
 |--------|-------------|
-| **set(Options)** | Change options after instantiation. |
-| **run** | Run the polyfill manually if the `run` option is set to `false`. |
-| **observe** | Start observing the DOM for changes if the `observe` option is set to `false`. |
-| **unobserve** | Stop observing the DOM for changes. |
-| **destroy** | Stop the polyfill, stop observing and restore the original markup. |
+| **set(Options)** | Change options after instantiation.* |
+| **run** | *Run the polyfill manually if the `run` option is set to `false`.* |
+| **observe** | *Start observing the DOM for changes if the `observe` option is set to `false`.* |
+| **unobserve** | *Stop observing the DOM for changes.* |
+| **destroy** | *Stop the polyfill, stop observing and restore the original markup.* |
 
 ### Options
 
-**target** `string|SVGUseElement[]|NodeListOf<SVGUseElement>`  
-*Defines SVG `use` elements to process.*  
-*default* `svg use`
-
-**context** `HTMLElement`  
-*Defines the context in which to search for SVG use elements.*  
-*default* `window.document.body || window.document.documentElement`
-
-**root** `HTMLElement`  
-*Defines the element to which prepend SVG embeds to.*  
-*default* `window.document.body || window.document.documentElement`
-
-**prefix** `boolean`  
-*Prefix `id` attribute values to ensure uniqueness. `false` won't change the attributes.*  
-*default* `true`
-
-**detect** `boolean`  
-*Detect browser-support automatically. `false` will run the polyfill in any browser.*  
-*default* `true`
-
-**observe** `boolean`  
-*Observe DOM changes within the `context` element and rerun the polyfill.*  
-*default* `true`
+| option | description | type | default |
+|--------|-------------|------|---------|
+| **target** | *Defines SVG `use` elements to process.* | `string|SVGUseElement[]|NodeListOf<SVGUseElement>` | `svg use` |
+| **context** | *Defines the context in which to search for SVG use elements.* | `HTMLElement` | `window.document.body || window.document.documentElement` |
+| **root** | *Defines the element to which prepend SVG embeds to.* | `HTMLElement` | `window.document.body || window.document.documentElement` |
+| **prefix** | *Prefix `id` attribute values to ensure uniqueness. `false` won't change the attributes.* | `boolean` | `true` |
+| **detect** | *Detect browser-support automatically. `false` will run the polyfill in any browser.* | `boolean` | `true` |
+| **observe** | *Observe DOM changes within the `context` element and rerun the polyfill.* | `boolean` | `true` |
 
 ## Compatibility
 
