@@ -15,7 +15,7 @@ export default class Polyfill {
 		context: window.document.body || window.document.documentElement,
 		root: window.document.body || window.document.documentElement,
 		run: true,
-		replace: true,
+		prefix: true,
 		detect: true,
 		observe: true,
 	};
@@ -119,7 +119,7 @@ export default class Polyfill {
 		identifier = identifier.replace('#', '');
 		prefix = prefix.replace(/^\//, '').replace(/\.svg$/, '').replace(/[^a-zA-Z0-9]/g, '-');
 
-		return this.options.replace
+		return this.options.prefix
 			? `${prefix}-${identifier}`
 			: identifier;
 	}
@@ -144,7 +144,7 @@ export default class Polyfill {
 
 		this.cache.files[address] = file;
 
-		if (this.options.replace) {
+		if (this.options.prefix) {
 			this.parser.href = address;
 
 			[].slice.call(file.querySelectorAll('[id]')).forEach((reference: HTMLElement) => {

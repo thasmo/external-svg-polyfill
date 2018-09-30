@@ -3,7 +3,7 @@ export default interface Options {
 	context: HTMLElement;
 	root: HTMLElement;
 	run: boolean;
-	replace: boolean;
+	prefix: boolean;
 	detect: boolean;
 	observe: boolean;
 }
