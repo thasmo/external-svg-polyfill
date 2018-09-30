@@ -16,7 +16,7 @@ Externally referenced *SVG sprites* mitigate those problems but are not support 
 * External SVG files are fetched via `xhr` and embedded while `use` elements are updated.
 * To prevent naming collision issues, `id` attributes are updated to use a unique name.
 * Dynamically added SVG `use` elements are processed upon changes in the `DOM`.
-* File size is ~ 3.5 KiB minified to keep the load, parse and execution times low.
+* Minified file size is below 5 KiB to keep the load, parse and execution times low.
 * Script is not self-executing, it needs to be called explicitly.
 * Project is written in TypeScript.
 
@@ -33,33 +33,44 @@ npm install @thasmo/external-svg-polyfill
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@1/browser/bundle.min.js"></script>
 ```
+
 ## Usage
 
 Just define some `svg use` elements in the HTML markup and let `external-svg-polyfill` do the rest.
 
+**Static Website**
 ```html
-<svg xmlns="http://www.w3.org/2000/svg">
-    <use href="assets/sprite.svg#icon"></use>
-</svg>
+<!doctype html>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@1/browser/bundle.min.js"></script>
+        <script>
+            new ExternalSvgPolyfill();
+        </script>
+    </head>
+    <body>
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <use href="/static/sprite.svg#icon"></use>
+        </svg>
+    </body>
+</html>
+```
+
+**Web Application**
+```js
+import ExternalSvgPolyfill from '@thasmo/external-svg-polyfill';
+new ExternalSvgPolyfill();
 ```
 
 ### API
-```js
-import Polyfill from '@thasmo/external-svg-polyfill';
 
-const polyfill = new Polyfill({
-    context: window.document.body,
-    root: window.document.body,
-    run: false,
-    prefix: true,
-    detect: true,
-    observe: false,
-});
-
-polyfill.run();
-polyfill.observe();
-polyfill.destroy();
-```
+| method | description |
+|--------|-------------|
+| **set(Options)** | Change options after instantiation. |
+| **run** | Run the polyfill manually if the `run` option is set to `false`. |
+| **observe** | Start observing the DOM for changes if the `observe` option is set to `false`. |
+| **unobserve** | Stop observing the DOM for changes. |
+| **destroy** | Stop the polyfill, stop observing and restore the original markup. |
 
 ### Options
 
