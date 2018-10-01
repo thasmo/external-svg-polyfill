@@ -51,7 +51,6 @@ export default class Polyfill {
 			this.observer.observe(this.options.context, {
 				childList: true,
 				subtree: true,
-				attributes: true,
 			});
 		} else {
 			this.options.context.addEventListener('DOMSubtreeModified', this.handlers.documentChange);
