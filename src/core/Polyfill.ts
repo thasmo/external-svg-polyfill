@@ -70,14 +70,30 @@ export default class Polyfill {
 	public destroy(): void {
 		this.unobserve();
 
-		Object.keys(this.cache.elements).forEach((key) => {
-			this.setLinkAttribute(this.cache.elements[key], key);
-			delete this.cache.elements[key];
+		Object.keys(this.cache.elements).forEach((value) => {
+			const dispatch = this.dispatchEvent(this.cache.elements[value], 'revoke', {
+				value,
+			});
+
+			if (!dispatch.defaultPrevented) {
+				this.renderFrame(() => {
+					this.setLinkAttribute(this.cache.elements[value], value);
+					delete this.cache.elements[value];
+				});
+			}
 		});
 
-		Object.keys(this.cache.files).forEach((key) => {
-			this.options.root.removeChild(this.cache.files[key]);
-			delete this.cache.files[key];
+		Object.keys(this.cache.files).forEach((address) => {
+			const dispatch = this.dispatchEvent(this.cache.files[address], 'remove', {
+				address,
+			});
+
+			if (!dispatch.defaultPrevented) {
+				this.renderFrame(() => {
+					this.options.root.removeChild(this.cache.files[address]);
+					delete this.cache.files[address];
+				});
+			}
 		});
 	}
 
@@ -89,21 +105,35 @@ export default class Polyfill {
 		elements.forEach(this.processElement.bind(this));
 	}
 
-	private processElement(element: SVGUseElement): void {
+	private processElement(element: HTMLElement): void {
 		const value = element.getAttribute('xlink:href') || element.getAttribute('href');
 
-		if (value && value[0] !== '#' && (this.parser.href = value)) {
+		if (value && value[0] !== '#' && !this.cache.elements.hasOwnProperty(value) && (this.parser.href = value)) {
 			const address = this.parser.href.split('#')[0];
+			const identifier = this.generateIdentifier(this.parser.hash, this.parser.pathname);
 
 			if (address && !this.cache.files.hasOwnProperty(address)) {
-				this.cache.files[address] = null;
-				this.loadFile(address);
+				const dispatch = this.dispatchEvent(element, 'load', {
+					address,
+				});
+
+				if (!dispatch.defaultPrevented) {
+					this.cache.files[address] = null;
+					this.loadFile(address);
+				}
 			}
 
-			const identifier = this.generateIdentifier(this.parser.hash, this.parser.pathname);
-			this.setLinkAttribute(element, `#${identifier}`);
+			const dispatch = this.dispatchEvent(element, 'apply', {
+				address,
+				identifier,
+			});
 
-			this.cache.elements[value] = element;
+			if (!dispatch.defaultPrevented) {
+				this.renderFrame(() => {
+					this.setLinkAttribute(element, `#${identifier}`);
+					this.cache.elements[value] = element;
+				});
+			}
 		}
 	}
 
@@ -124,7 +154,24 @@ export default class Polyfill {
 			: identifier;
 	}
 
-	private setLinkAttribute(element: SVGUseElement, value: string): void {
+	private dispatchEvent(element: HTMLElement, name: string, detail?: any): CustomEvent {
+		const event = window.document.createEvent('CustomEvent');
+		event.initCustomEvent(`external-svg-polyfill.${name}`, true, true, detail);
+
+		if (element.dispatchEvent) {
+			element.dispatchEvent(event)
+		} else if (element.fireEvent) {
+			element.fireEvent(event);
+		}
+
+		return event;
+	}
+
+	private renderFrame(callback: FrameRequestCallback): void {
+		(window.requestAnimationFrame || window.setTimeout)(callback.bind(this));
+	}
+
+	private setLinkAttribute(element: HTMLElement, value: string): void {
 		element.hasAttribute('href')
 			? element.setAttribute('href', value)
 			: element.setAttribute('xlink:href', value);
@@ -159,8 +206,15 @@ export default class Polyfill {
 			});
 		}
 
-		(window.requestAnimationFrame || window.setTimeout)(() => {
-			this.options.root.insertAdjacentElement('afterbegin', file);
+		const dispatch = this.dispatchEvent(this.options.root, 'insert', {
+			address,
+			file,
 		});
+
+		if (!dispatch.defaultPrevented) {
+			this.renderFrame(() => {
+				this.options.root.insertAdjacentElement('afterbegin', file);
+			});
+		}
 	}
 }

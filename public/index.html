@@ -11,13 +11,13 @@
 			}
 
 			body {
-				height: 100vh;
 				margin: 0;
 				padding: 10vw;
 			}
 
 			main {
 				display: flex;
+				flex-wrap: wrap;
 				align-items: center;
 				justify-content: center;
 				height: 100%;
@@ -25,9 +25,9 @@
 
 			svg {
 				flex-basis: auto;
-				flex-shrink: 1;
-				flex-grow: 1;
-				width: 33vw;
+				flex-shrink: 0;
+				flex-grow: 0;
+				width: 16.666%;
 			}
 		</style>
 
@@ -36,11 +36,41 @@
 			window.document.addEventListener('DOMContentLoaded', function() {
 				var polyfill = new ExternalSvgPolyfill.default();
 			});
+
+			window.document.addEventListener('external-svg-polyfill.load', console.info);
+			window.document.addEventListener('external-svg-polyfill.insert', console.info);
+			window.document.addEventListener('external-svg-polyfill.remove', console.info);
+			window.document.addEventListener('external-svg-polyfill.apply', console.info);
+			window.document.addEventListener('external-svg-polyfill.revoke', console.info);
 		</script>
 	</head>
 
 	<body>
 		<main>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use xlink:href="/browsers.svg#firefox"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use xlink:href="/browsers.svg#opera"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use xlink:href="/browsers.svg#brave"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use xlink:href="/bundlers.svg#webpack"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use xlink:href="/bundlers.svg#rollup"></use>
+			</svg>
+
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
+				<use xlink:href="/bundlers.svg#browserify"></use>
+			</svg>
+
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">
 				<use xlink:href="/browsers.svg#firefox"></use>
 			</svg>
