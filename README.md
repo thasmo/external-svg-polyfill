@@ -6,8 +6,8 @@ Browser like `IE9-IE11`, `Edge12`, `Safari 5.1-6`, or `UCWeb11`
 Referencing external files can be especially useful when dealing with a technique called
 *SVG sprites*, where multiple SVG elements are stored within a single SVG file. It is possible
 to inline these *SVG sprites* into the HTML document itself, but this has several disadvantages
-i.e. caching issues, unneeded HTML file size growth, development inconviniences, etc.
-Externally referenced *SVG sprites* mitigate those problems but are not support in the mentioned browsers.
+i.e. caching issues, unneeded HTML file size growth, development inconveniences, etc.
+Externally referenced *SVG sprites* mitigate those problems but are not supported in the mentioned browsers.
 
 **`external-svg-polyfill` embeds the referenced SVG files automatically.**
 
