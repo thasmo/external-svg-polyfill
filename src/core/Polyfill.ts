@@ -60,7 +60,7 @@ export default class Polyfill {
 
 	public unobserve(): void {
 		if (typeof MutationObserver !== 'undefined') {
-			this.observer.disconnect();
+			this.observer && this.observer.disconnect();
 			delete this.observer;
 		} else {
 			this.options.context.removeEventListener('DOMSubtreeModified', this.handlers.documentChange);
