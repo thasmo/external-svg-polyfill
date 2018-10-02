@@ -6,4 +6,5 @@ export default interface Options {
 	prefix: boolean;
 	detect: boolean;
 	observe: boolean;
+	namespace: string;
 }

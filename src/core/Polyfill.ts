@@ -18,6 +18,7 @@ export default class Polyfill {
 		prefix: true,
 		detect: true,
 		observe: true,
+		namespace: 'external-svg-polyfill',
 	};
 
 	private handlers = {
@@ -155,7 +156,7 @@ export default class Polyfill {
 
 	private dispatchEvent(element: HTMLElement, name: string, detail?: any): CustomEvent {
 		const event = window.document.createEvent('CustomEvent');
-		event.initCustomEvent(`external-svg-polyfill.${name}`, true, true, detail);
+		event.initCustomEvent(`${this.options.namespace}.${name}`, true, true, detail);
 
 		if (element.dispatchEvent) {
 			element.dispatchEvent(event)

@@ -84,18 +84,19 @@ new ExternalSvgPolyfill();
 | **prefix** | *Prefix `id` attribute values to ensure uniqueness. `false` won't change the attributes.* | `boolean` | `true` |
 | **detect** | *Detect browser-support automatically. `false` will run the polyfill in any browser.* | `boolean` | `true` |
 | **observe** | *Observe DOM changes within the `context` element and rerun the polyfill.* | `boolean` | `true` |
+| **namespace** | *Namespace of the dispatched events.* | `string` | `external-svg-polyfill` |
 
 ### Events
 
-All events can be cancelled using `event.preventDefault()`.
+All events are prefixed with the `namespace` option and can be cancelled using `event.preventDefault()`.
 
 | event | description | data |
 |-------|-------------|------|
-| **external-svg-polyfill.load** | *An external SVG file gets loaded via `xhr`.* | `address` |
-| **external-svg-polyfill.insert** | *An external SVG file gets inserted.* | `address`, `file` |
-| **external-svg-polyfill.remove** | *An external SVG file gets removed.* | `address` |
-| **external-svg-polyfill.apply** | *An SVG `use` element's `href` attribute gets updated.* | `address`, `identifier` |
-| **external-svg-polyfill.revoke** | *An SVG `use` element's `href` attribute gets restored.* | `value` |
+| **`external-svg-polyfill`.load** | *An external SVG file gets loaded via `xhr`.* | `address` |
+| **`external-svg-polyfill`.insert** | *An external SVG file gets inserted.* | `address`, `file` |
+| **`external-svg-polyfill`.remove** | *An external SVG file gets removed.* | `address` |
+| **`external-svg-polyfill`.apply** | *An SVG `use` element's `href` attribute gets updated.* | `address`, `identifier` |
+| **`external-svg-polyfill`.revoke** | *An SVG `use` element's `href` attribute gets restored.* | `value` |
 
 ## Compatibility
 
