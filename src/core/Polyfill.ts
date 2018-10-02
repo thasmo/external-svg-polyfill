@@ -71,29 +71,21 @@ export default class Polyfill {
 		this.unobserve();
 
 		Object.keys(this.cache.elements).forEach((value) => {
-			const dispatch = this.dispatchEvent(this.cache.elements[value], 'revoke', {
-				value,
-			});
-
-			if (!dispatch.defaultPrevented) {
+			this.dispatchEvent(this.cache.elements[value], 'revoke', { value }, () => {
 				this.renderFrame(() => {
 					this.setLinkAttribute(this.cache.elements[value], value);
 					delete this.cache.elements[value];
 				});
-			}
+			});
 		});
 
 		Object.keys(this.cache.files).forEach((address) => {
-			const dispatch = this.dispatchEvent(this.cache.files[address], 'remove', {
-				address,
-			});
-
-			if (!dispatch.defaultPrevented) {
+			this.dispatchEvent(this.cache.files[address], 'remove', { address }, () => {
 				this.renderFrame(() => {
 					this.options.root.removeChild(this.cache.files[address]);
 					delete this.cache.files[address];
 				});
-			}
+			});
 		});
 	}
 
@@ -113,27 +105,18 @@ export default class Polyfill {
 			const identifier = this.generateIdentifier(this.parser.hash, this.parser.pathname);
 
 			if (address && !this.cache.files.hasOwnProperty(address)) {
-				const dispatch = this.dispatchEvent(element, 'load', {
-					address,
-				});
-
-				if (!dispatch.defaultPrevented) {
+				this.dispatchEvent(element, 'load', { address }, () => {
 					this.cache.files[address] = null;
 					this.loadFile(address);
-				}
+				});
 			}
 
-			const dispatch = this.dispatchEvent(element, 'apply', {
-				address,
-				identifier,
-			});
-
-			if (!dispatch.defaultPrevented) {
+			this.dispatchEvent(element, 'apply', { address, identifier }, () => {
 				this.renderFrame(() => {
 					this.setLinkAttribute(element, `#${identifier}`);
 					this.cache.elements[value] = element;
 				});
-			}
+			});
 		}
 	}
 
@@ -154,7 +137,7 @@ export default class Polyfill {
 			: identifier;
 	}
 
-	private dispatchEvent(element: HTMLElement, name: string, detail?: any): CustomEvent {
+	private dispatchEvent(element: HTMLElement, name: string, detail?: any, callback?: Function): CustomEvent {
 		const event = window.document.createEvent('CustomEvent');
 		event.initCustomEvent(`${this.options.namespace}.${name}`, true, true, detail);
 
@@ -162,6 +145,10 @@ export default class Polyfill {
 			element.dispatchEvent(event)
 		} else if (element.fireEvent) {
 			element.fireEvent(event);
+		}
+
+		if (!event.defaultPrevented && callback) {
+			callback();
 		}
 
 		return event;
@@ -209,15 +196,10 @@ export default class Polyfill {
 			this.prefixValues(file, this.parser.pathname);
 		}
 
-		const dispatch = this.dispatchEvent(this.options.root, 'insert', {
-			address,
-			file,
-		});
-
-		if (!dispatch.defaultPrevented) {
+		this.dispatchEvent(this.options.root, 'insert', { address, file }, () => {
 			this.renderFrame(() => {
 				this.options.root.insertAdjacentElement('afterbegin', file);
 			});
-		}
+		});
 	}
 }
