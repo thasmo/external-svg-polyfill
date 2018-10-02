@@ -177,6 +177,19 @@ export default class Polyfill {
 			: element.setAttribute('xlink:href', value);
 	}
 
+	private prefixValues(file: HTMLElement, prefix: string): void {
+		[].slice.call(file.querySelectorAll('[id]')).forEach((reference: HTMLElement) => {
+			const value = reference.getAttribute('id')!;
+			const identifier = this.generateIdentifier(value, prefix);
+
+			reference.setAttribute('id', identifier);
+
+			[].slice.call(file.querySelectorAll(`[fill="url(#${value})"]`)).forEach((referencee: HTMLElement) => {
+				referencee.setAttribute('fill', `url(#${identifier})`);
+			});
+		});
+	}
+
 	private onDocumentChanged(): void {
 		this.updateElements();
 	}
@@ -193,17 +206,7 @@ export default class Polyfill {
 
 		if (this.options.prefix) {
 			this.parser.href = address;
-
-			[].slice.call(file.querySelectorAll('[id]')).forEach((reference: HTMLElement) => {
-				const value = reference.getAttribute('id')!;
-				const identifier = this.generateIdentifier(value, this.parser.pathname.replace(/^\//, ''));
-
-				reference.setAttribute('id', identifier);
-
-				[].slice.call(file.querySelectorAll(`[fill="url(#${value})"]`)).forEach((referencee: HTMLElement) => {
-					referencee.setAttribute('fill', `url(#${identifier})`);
-				});
-			});
+			this.prefixValues(file, this.parser.pathname);
 		}
 
 		const dispatch = this.dispatchEvent(this.options.root, 'insert', {
