@@ -1,5 +1,4 @@
 import Options from './Options';
-import detect from '../common/detect';
 
 export default class Polyfill {
 	private options: Options;
@@ -19,6 +18,12 @@ export default class Polyfill {
 		detect: true,
 		observe: true,
 		namespace: 'external-svg-polyfill',
+		agents: [
+			/msie|trident/i,
+			/edge\/12/i,
+			/version\/6\.0.+safari/i,
+			/ucbrowser\/11/i,
+		],
 	};
 
 	private handlers = {
@@ -39,10 +44,17 @@ export default class Polyfill {
 	}
 
 	public run(): void {
-		if (!this.options.detect || detect()) {
+		if (!this.options.detect || this.detect()) {
 			this.updateElements();
 			this.options.observe && this.observe();
 		}
+	}
+
+	public detect(): boolean {
+		return this.options.agents.some((agent: RegExp) => {
+			console.log(agent.test(window.navigator.userAgent));
+			return agent.test(window.navigator.userAgent);
+		});
 	}
 
 	public observe(): void {

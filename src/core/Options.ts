@@ -7,4 +7,5 @@ export default interface Options {
 	detect: boolean;
 	observe: boolean;
 	namespace: string;
+	agents: RegExp[];
 }

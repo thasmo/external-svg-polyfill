@@ -85,6 +85,7 @@ new ExternalSvgPolyfill();
 | **detect** | *Detect browser-support automatically. `false` will run the polyfill in any browser.* | `boolean` | `true` |
 | **observe** | *Observe DOM changes within the `context` element and rerun the polyfill.* | `boolean` | `true` |
 | **namespace** | *Namespace of the dispatched events.* | `string` | `external-svg-polyfill` |
+| **agents** | *Array of regular expressions matching relevant user agents to polyfill.* | `RegExp[]` | `[/Edge\/12/, /Version\/6\.0.+Safari/, /UCBrowser\/11/]` |
 
 ### Events
 
