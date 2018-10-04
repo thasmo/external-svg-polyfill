@@ -146,7 +146,7 @@ export default class Polyfill {
 			: identifier;
 	}
 
-	private dispatchEvent(element: HTMLElement, name: string, detail?: any, callback?: Function): CustomEvent {
+	private dispatchEvent(element: HTMLElement, name: string, detail?: any, callback?: Function): void {
 		const event = window.document.createEvent('CustomEvent');
 		event.initCustomEvent(`${this.options.namespace}.${name}`, true, true, detail);
 
@@ -159,8 +159,6 @@ export default class Polyfill {
 		if (!event.defaultPrevented && callback) {
 			callback();
 		}
-
-		return event;
 	}
 
 	private renderFrame(callback: FrameRequestCallback): void {
