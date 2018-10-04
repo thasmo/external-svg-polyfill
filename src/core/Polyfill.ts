@@ -51,9 +51,7 @@ export default class Polyfill {
 	}
 
 	public detect(): boolean {
-		return this.options.agents.some((agent: RegExp) => {
-			return agent.test(window.navigator.userAgent);
-		});
+		return this.options.agents.some((agent: RegExp) => agent.test(window.navigator.userAgent));
 	}
 
 	public observe(): void {
