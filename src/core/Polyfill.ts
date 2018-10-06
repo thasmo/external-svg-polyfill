@@ -4,9 +4,9 @@ export default class Polyfill {
 	private options: Options;
 	private parser: HTMLAnchorElement;
 	private observer: MutationObserver;
-	private cache: any = {
-		files: {},
-		elements: {},
+	private cache: {
+		files: Map<string, HTMLElement|null>;
+		elements: Map<HTMLElement, string>;
 	};
 
 	private defaults: Options = {
@@ -33,6 +33,12 @@ export default class Polyfill {
 	public constructor(options?: Options) {
 		this.set(options);
 		this.parser = window.document.createElement('a');
+
+		this.cache = {
+			files: new Map(),
+			elements: new Map(),
+		};
+
 		this.options.run && this.run();
 	}
 
@@ -79,20 +85,20 @@ export default class Polyfill {
 	public destroy(): void {
 		this.unobserve();
 
-		Object.keys(this.cache.elements).forEach((value) => {
-			this.dispatchEvent(this.cache.elements[value], 'revoke', { value }, () => {
+		this.cache.elements.forEach((value: string, element: HTMLElement) => {
+			this.dispatchEvent(element, 'revoke', { value }, () => {
 				this.renderFrame(() => {
-					this.setLinkAttribute(this.cache.elements[value], value);
-					delete this.cache.elements[value];
+					this.setLinkAttribute(element, value);
+					this.cache.elements.delete(element);
 				});
 			});
 		});
 
-		Object.keys(this.cache.files).forEach((address) => {
-			this.dispatchEvent(this.cache.files[address], 'remove', { address }, () => {
+		this.cache.files.forEach((file: HTMLElement, address: string) => {
+			this.dispatchEvent(file, 'remove', { address }, () => {
 				this.renderFrame(() => {
-					this.options.root.removeChild(this.cache.files[address]);
-					delete this.cache.files[address];
+					this.options.root.removeChild(file);
+					this.cache.files.delete(address);
 				});
 			});
 		});
@@ -109,13 +115,13 @@ export default class Polyfill {
 	private processElement(element: HTMLElement): void {
 		const value = element.getAttribute('xlink:href') || element.getAttribute('href');
 
-		if (value && value[0] !== '#' && !this.cache.elements.hasOwnProperty(value) && (this.parser.href = value)) {
+		if (value && value[0] !== '#' && !this.cache.elements.has(element) && (this.parser.href = value)) {
 			const address = this.parser.href.split('#')[0];
 			const identifier = this.generateIdentifier(this.parser.hash, this.parser.pathname);
 
-			if (address && !this.cache.files.hasOwnProperty(address)) {
+			if (address && !this.cache.files.has(address)) {
 				this.dispatchEvent(element, 'load', { address }, () => {
-					this.cache.files[address] = null;
+					this.cache.files.set(address, null);
 					this.loadFile(address);
 				});
 			}
@@ -123,7 +129,7 @@ export default class Polyfill {
 			this.dispatchEvent(element, 'apply', { address, identifier }, () => {
 				this.renderFrame(() => {
 					this.setLinkAttribute(element, `#${identifier}`);
-					this.cache.elements[value] = element;
+					this.cache.elements.set(element, value);
 				});
 			});
 		}
@@ -196,7 +202,7 @@ export default class Polyfill {
 		file.style.width = 0;
 		file.style.height = 0;
 
-		this.cache.files[address] = file;
+		this.cache.files.set(address, file);
 
 		if (this.options.prefix) {
 			this.parser.href = address;

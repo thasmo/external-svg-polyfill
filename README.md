@@ -103,7 +103,6 @@ All events are prefixed with the `namespace` option and can be cancelled using `
 
 `external-svg-polyfill` works in all browsers in general but polyfills the following.
 * `Internet Explorer 11` *tested*
-* `Internet Explorer 10` *tested*
 * `Safari 6` *tested*
 * `UCWeb 11` *untested*
 
