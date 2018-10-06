@@ -26,10 +26,6 @@ export default class Polyfill {
 		],
 	};
 
-	private handlers = {
-		documentChange: this.onDocumentChanged.bind(this),
-	};
-
 	public constructor(options?: Options) {
 		this.set(options);
 		this.parser = window.document.createElement('a');
@@ -61,25 +57,17 @@ export default class Polyfill {
 	}
 
 	public observe(): void {
-		if (typeof MutationObserver !== 'undefined') {
-			this.observer = new MutationObserver(this.handlers.documentChange);
+		this.observer = new MutationObserver(this.onDocumentChanged.bind(this));
 
-			this.observer.observe(this.options.context, {
-				childList: true,
-				subtree: true,
-			});
-		} else {
-			this.options.context.addEventListener('DOMSubtreeModified', this.handlers.documentChange);
-		}
+		this.observer.observe(this.options.context, {
+			childList: true,
+			subtree: true,
+		});
 	}
 
 	public unobserve(): void {
-		if (typeof MutationObserver !== 'undefined') {
-			this.observer && this.observer.disconnect();
-			delete this.observer;
-		} else {
-			this.options.context.removeEventListener('DOMSubtreeModified', this.handlers.documentChange);
-		}
+		this.observer && this.observer.disconnect();
+		delete this.observer;
 	}
 
 	public destroy(): void {
