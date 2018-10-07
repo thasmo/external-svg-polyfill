@@ -169,13 +169,12 @@ export default class Polyfill {
 	}
 
 	private renderFrame(callback: FrameRequestCallback): void {
-		(window.requestAnimationFrame || window.setTimeout)(callback.bind(this));
+		window.requestAnimationFrame(callback.bind(this));
 	}
 
 	private setLinkAttribute(element: HTMLElement, value: string): void {
-		element.hasAttribute('href')
-			? element.setAttribute('href', value)
-			: element.setAttribute('xlink:href', value);
+		element.hasAttribute('href') && element.setAttribute('href', value);
+		element.hasAttribute('xlink:href') && element.setAttribute('xlink:href', value);
 	}
 
 	private prefixValues(file: HTMLElement, prefix: string): void {
