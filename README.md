@@ -9,10 +9,10 @@ to inline these *SVG sprites* into the HTML document itself, but this has severa
 i.e. caching issues, unneeded HTML file size growth, development inconveniences, etc.
 Externally referenced *SVG sprites* mitigate those problems but are not supported in the mentioned browsers.
 
-**`external-svg-polyfill` embeds the referenced SVG files automatically.**
+**`external-svg-polyfill` embeds referenced SVG files automatically.**
 
 **Features**
-* User-agent sniffing (which can be disabled) is used to determine feature support.
+* User-agent sniffing is used to determine feature support.
 * External SVG files are fetched via `xhr` and embedded while `use` elements are updated.
 * To prevent naming collision issues, `id` attributes are updated to use a unique name.
 * Dynamically added SVG `use` elements are processed upon changes in the `DOM`.
@@ -46,7 +46,9 @@ Just define some `svg use` elements in the HTML markup and let `external-svg-pol
     <head>
         <script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@1/browser/bundle.min.js"></script>
         <script>
-            new ExternalSvgPolyfill();
+            window.document.addEventListener('DOMContentLoaded', function() {
+                new ExternalSvgPolyfill();
+            });
         </script>
     </head>
     <body>
@@ -67,11 +69,12 @@ new ExternalSvgPolyfill();
 
 | method | description |
 |--------|-------------|
-| **set(Options)** | Change options after instantiation.* |
+| **set(Options)** | *Change options after instantiation.* |
 | **run** | *Run the polyfill manually if the `run` option is set to `false`.* |
 | **observe** | *Start observing the DOM for changes if the `observe` option is set to `false`.* |
 | **unobserve** | *Stop observing the DOM for changes.* |
 | **destroy** | *Stop the polyfill, stop observing and restore the original markup.* |
+| **detect** | *Run browser detection manually if the `detect` option is set to `false`.* |
 
 ### Options
 
@@ -89,21 +92,20 @@ new ExternalSvgPolyfill();
 
 ### Events
 
-All events are prefixed with the `namespace` option and can be cancelled using `event.preventDefault()`.
+All event are prefixed with the `namespace` option, are bubbling and can be cancelled using `event.preventDefault()`.
 
 | event | description | data |
 |-------|-------------|------|
-| **`external-svg-polyfill`.load** | *An external SVG file gets loaded via `xhr`.* | `address` |
-| **`external-svg-polyfill`.insert** | *An external SVG file gets inserted.* | `address`, `file` |
-| **`external-svg-polyfill`.remove** | *An external SVG file gets removed.* | `address` |
-| **`external-svg-polyfill`.apply** | *An SVG `use` element's `href` attribute gets updated.* | `address`, `identifier` |
-| **`external-svg-polyfill`.revoke** | *An SVG `use` element's `href` attribute gets restored.* | `value` |
+| **`external-svg-polyfill`.load** | *An external SVG file is loaded via `xhr`.* | `address` |
+| **`external-svg-polyfill`.insert** | *An external SVG file is inserted.* | `address`, `file` |
+| **`external-svg-polyfill`.remove** | *An external SVG file is removed.* | `address` |
+| **`external-svg-polyfill`.apply** | *An SVG `use` element's `href` attribute is updated.* | `address`, `identifier` |
+| **`external-svg-polyfill`.revoke** | *An SVG `use` element's `href` attribute is restored.* | `value` |
 
 ## Compatibility
 
-`external-svg-polyfill` works in all browsers in general but polyfills the following.
+`external-svg-polyfill` can polyfill these browsers:
 * `Internet Explorer 11` *tested*
-* `Safari 6` *tested*
 * `UCWeb 11` *untested*
 
 ## Alternatives
