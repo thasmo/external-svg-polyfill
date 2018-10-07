@@ -10,6 +10,7 @@ export default class Polyfill {
 	};
 	private handler: {
 		viewportChange: EventListener;
+		documentChange: MutationCallback;
 	};
 
 	private defaults: Options = {
@@ -40,6 +41,7 @@ export default class Polyfill {
 
 		this.handler = {
 			viewportChange: this.onViewportChange.bind(this),
+			documentChange: this.onDocumentChanged.bind(this),
 		};
 
 		this.options.run && this.run();
@@ -64,7 +66,7 @@ export default class Polyfill {
 	}
 
 	public observe(): void {
-		this.observer = new MutationObserver(this.onDocumentChanged.bind(this));
+		this.observer = new MutationObserver(this.handler.documentChange);
 
 		this.observer.observe(this.options.context, {
 			childList: true,
