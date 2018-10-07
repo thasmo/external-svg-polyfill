@@ -25,7 +25,6 @@ export default class Polyfill {
 		agents: [
 			/msie|trident/i,
 			/edge\/12/i,
-			/version\/6\.0.+safari/i,
 			/ucbrowser\/11/i,
 		],
 	};
