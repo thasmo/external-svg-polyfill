@@ -8,6 +8,9 @@ export default class Polyfill {
 		files: Map<string, HTMLElement|null>;
 		elements: Map<HTMLElement, string>;
 	};
+	private handler: {
+		viewportChange: EventListener;
+	};
 
 	private defaults: Options = {
 		target: 'svg use',
@@ -33,6 +36,10 @@ export default class Polyfill {
 		this.cache = {
 			files: new Map(),
 			elements: new Map(),
+		};
+
+		this.handler = {
+			viewportChange: this.onViewportChange.bind(this),
 		};
 
 		this.options.run && this.run();
@@ -63,11 +70,17 @@ export default class Polyfill {
 			childList: true,
 			subtree: true,
 		});
+
+		window.addEventListener('resize', this.handler.viewportChange);
+		window.addEventListener('orientationchange', this.handler.viewportChange);
 	}
 
 	public unobserve(): void {
 		this.observer && this.observer.disconnect();
 		delete this.observer;
+
+		window.removeEventListener('resize', this.handler.viewportChange);
+		window.removeEventListener('orientationchange', this.handler.viewportChange);
 	}
 
 	public destroy(): void {
@@ -178,6 +191,10 @@ export default class Polyfill {
 	}
 
 	private onDocumentChanged(): void {
+		this.updateElements();
+	}
+
+	private onViewportChange(): void {
 		this.updateElements();
 	}
 
