@@ -115,7 +115,7 @@ export default class Polyfill {
 	}
 
 	private processElement(element: HTMLElement): void {
-		const value = element.getAttribute('xlink:href') || element.getAttribute('href');
+		const value = element.getAttribute('href') || element.getAttribute('xlink:href');
 
 		if (value && value[0] !== '#' && !this.cache.elements.has(element) && (this.parser.href = value)) {
 			const address = this.parser.href.split('#')[0];
