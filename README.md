@@ -32,7 +32,7 @@ npm install @thasmo/external-svg-polyfill
 
 [**CDN**][cdn]
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@1/browser/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@2/browser/bundle.min.js"></script>
 ```
 
 ## Usage
@@ -44,7 +44,7 @@ Just define some `svg use` elements in the HTML markup and let `external-svg-pol
 <!doctype html>
 <html>
     <head>
-        <script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@1/browser/bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@2/browser/bundle.min.js"></script>
         <script>
             window.document.addEventListener('DOMContentLoaded', function() {
                 new ExternalSvgPolyfill();
