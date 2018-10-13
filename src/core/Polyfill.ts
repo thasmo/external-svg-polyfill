@@ -30,7 +30,11 @@ export default class Polyfill {
 	};
 
 	public constructor(options?: Options) {
-		this.set(options);
+		this.options = {
+			...this.defaults,
+			...options,
+		};
+
 		this.parser = window.document.createElement('a');
 
 		this.cache = {
@@ -44,13 +48,6 @@ export default class Polyfill {
 		};
 
 		this.options.run && this.run();
-	}
-
-	public set(options?: Options): void {
-		this.options = {
-			...this.defaults,
-			...options,
-		};
 	}
 
 	public run(): void {

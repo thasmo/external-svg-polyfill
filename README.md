@@ -69,7 +69,6 @@ new ExternalSvgPolyfill();
 
 | method | description |
 |--------|-------------|
-| **set(Options)** | *Change options after instantiation.* |
 | **run** | *Run the polyfill manually if the `run` option is set to `false`.* |
 | **observe** | *Start observing the DOM for changes if the `observe` option is set to `false`.* |
 | **unobserve** | *Stop observing the DOM for changes.* |
