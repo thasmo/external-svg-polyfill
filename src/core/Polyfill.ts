@@ -152,11 +152,8 @@ export default class Polyfill {
 	}
 
 	private dispatchEvent(element: HTMLElement, name: string, detail?: any, callback?: Function): void {
-		const event = new CustomEvent(`${this.options.namespace}.${name}`, {
-			detail,
-			bubbles: true,
-			cancelable: true,
-		});
+		const event = window.document.createEvent('CustomEvent');
+		event.initCustomEvent(`${this.options.namespace}.${name}`, true, true, detail);
 
 		element.dispatchEvent(event);
 
