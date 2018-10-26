@@ -23,7 +23,7 @@
     "url": "https://thasmo.com/"
   },
   "scripts": {
-    "start": "concurrently \"tsc --watch\" \"rollup --config --watch\" \"browser-sync start --config .browsersyncrc.json\"",
+    "start": "concurrently \"tsc --watch\" \"rollup --config --watch\" \"browser-sync start --cors --config .browsersyncrc.json\"",
     "build": "tsc",
     "bundle": "rollup --config",
     "prepare": "concurrently \"tsc\" \"rollup --config\""

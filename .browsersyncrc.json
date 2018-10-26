@@ -6,7 +6,6 @@
 		}
 	},
 	"https": true,
-	"cors": true,
 	"notify": false,
 	"reloadOnRestart": false
 }
