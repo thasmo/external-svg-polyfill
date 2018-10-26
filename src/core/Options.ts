@@ -6,6 +6,7 @@ export default interface Options {
 	prefix: boolean;
 	detect: boolean;
 	observe: boolean;
+	crossdomain: boolean;
 	namespace: string;
 	agents: RegExp[];
 }

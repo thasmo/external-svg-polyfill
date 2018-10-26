@@ -4,6 +4,7 @@ export default class Polyfill {
 	private options: Options;
 	private parser: HTMLAnchorElement;
 	private observer: MutationObserver;
+	private process: boolean;
 	private cache: {
 		files: Map<string, HTMLElement|null>;
 		elements: Map<HTMLElement, string>;
@@ -21,6 +22,7 @@ export default class Polyfill {
 		prefix: true,
 		detect: true,
 		observe: true,
+		crossdomain: true,
 		namespace: 'external-svg-polyfill',
 		agents: [
 			/msie|trident/i,
@@ -47,14 +49,13 @@ export default class Polyfill {
 			documentChange: this.onDocumentChanged.bind(this),
 		};
 
+		this.process = !this.options.detect || this.detect();
 		this.options.run && this.run();
 	}
 
 	public run(): void {
-		if (!this.options.detect || this.detect()) {
-			this.updateElements();
-			this.options.observe && this.observe();
-		}
+		this.updateElements();
+		this.options.observe && this.observe();
 	}
 
 	public detect(): boolean {
@@ -114,23 +115,27 @@ export default class Polyfill {
 	private processElement(element: HTMLElement): void {
 		const value = element.getAttribute('href') || element.getAttribute('xlink:href');
 
-		if (value && value[0] !== '#' && !this.cache.elements.has(element) && (this.parser.href = value)) {
-			const address = this.parser.href.split('#')[0];
-			const identifier = this.generateIdentifier(this.parser.hash, this.parser.pathname);
+		if (value && !this.cache.elements.has(element)) {
+			this.parser.href = value;
 
-			if (address && !this.cache.files.has(address)) {
-				this.dispatchEvent(element, 'load', { address }, () => {
-					this.cache.files.set(address, null);
-					this.loadFile(address);
+			if (this.process || (this.options.crossdomain && window.location.origin !== this.parser.origin)) {
+				const address = this.parser.href.split('#')[0];
+				const identifier = this.generateIdentifier(this.parser.hash, this.parser.pathname);
+
+				if (address && !this.cache.files.has(address)) {
+					this.dispatchEvent(element, 'load', { address }, () => {
+						this.cache.files.set(address, null);
+						this.loadFile(address);
+					});
+				}
+
+				this.dispatchEvent(element, 'apply', { address, identifier }, () => {
+					this.renderFrame(() => {
+						this.setLinkAttribute(element, `#${identifier}`);
+						this.cache.elements.set(element, value);
+					});
 				});
 			}
-
-			this.dispatchEvent(element, 'apply', { address, identifier }, () => {
-				this.renderFrame(() => {
-					this.setLinkAttribute(element, `#${identifier}`);
-					this.cache.elements.set(element, value);
-				});
-			});
 		}
 	}
 

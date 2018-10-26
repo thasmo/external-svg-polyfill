@@ -14,6 +14,7 @@ Externally referenced *SVG sprites* mitigate those problems but are not supporte
 **Features**
 * User-agent sniffing is used to determine feature support.
 * External SVG files are fetched via `xhr` and embedded while `use` elements are updated.
+* Cross-domain SVG files are fetched and embedded for all browsers to work around browser limitations.
 * To prevent naming collision issues, `id` attributes are updated to use a unique name.
 * Dynamically added SVG `use` elements are processed upon changes in the `DOM`.
 * Various lifecycle events get dispatched on relevant `DOM` elements.
@@ -86,6 +87,7 @@ new ExternalSvgPolyfill();
 | **prefix** | *Prefix `id` attribute values to ensure uniqueness. `false` won't change the attributes.* | `boolean` | `true` |
 | **detect** | *Detect browser-support automatically. `false` will run the polyfill in any browser.* | `boolean` | `true` |
 | **observe** | *Observe DOM changes within the `context` element and rerun the polyfill.* | `boolean` | `true` |
+| **crossdomain** | *Embed crossdomain SVG files for all browsers regardless.* | `boolean` | `true` |
 | **namespace** | *Namespace of the dispatched events.* | `string` | `external-svg-polyfill` |
 | **agents** | *Array of regular expressions matching relevant user agents to polyfill.* | `RegExp[]` | `[/Edge\/12/, /Version\/6\.0.+Safari/, /UCBrowser\/11/]` |
 
