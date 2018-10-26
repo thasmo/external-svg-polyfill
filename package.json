@@ -1,7 +1,7 @@
 {
   "name": "@thasmo/external-svg-polyfill",
   "description": "Small and basic polyfill to support referencing external SVG files.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "MIT",
   "main": "module/",
   "typings": "module/",
