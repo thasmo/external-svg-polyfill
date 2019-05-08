@@ -7,7 +7,7 @@ export default class Polyfill {
 	private process: boolean;
 	private cache: {
 		files: Map<string, HTMLElement|null>;
-		elements: Map<HTMLElement, string>;
+		elements: Map<SVGUseElement, string>;
 	};
 	private handler: {
 		viewportChange: EventListener;
@@ -37,8 +37,6 @@ export default class Polyfill {
 			...options,
 		};
 
-		this.parser = window.document.createElement('a');
-
 		this.cache = {
 			files: new Map(),
 			elements: new Map(),
@@ -48,6 +46,9 @@ export default class Polyfill {
 			viewportChange: this.onViewportChange.bind(this),
 			documentChange: this.onDocumentChanged.bind(this),
 		};
+
+		this.observer = new MutationObserver(this.handler.documentChange);
+		this.parser = window.document.createElement('a');
 
 		this.process = !this.options.detect || this.detect();
 		this.options.run && this.run();
@@ -63,8 +64,6 @@ export default class Polyfill {
 	}
 
 	public observe(): void {
-		this.observer = new MutationObserver(this.handler.documentChange);
-
 		this.observer.observe(this.options.context, {
 			childList: true,
 			subtree: true,
@@ -75,8 +74,7 @@ export default class Polyfill {
 	}
 
 	public unobserve(): void {
-		this.observer && this.observer.disconnect();
-		delete this.observer;
+		this.observer.disconnect();
 
 		window.removeEventListener('resize', this.handler.viewportChange);
 		window.removeEventListener('orientationchange', this.handler.viewportChange);
@@ -85,7 +83,7 @@ export default class Polyfill {
 	public destroy(): void {
 		this.unobserve();
 
-		this.cache.elements.forEach((value: string, element: HTMLElement) => {
+		this.cache.elements.forEach((value, element) => {
 			this.dispatchEvent(element, 'revoke', { value }, () => {
 				this.renderFrame(() => {
 					this.setLinkAttribute(element, value);
@@ -94,12 +92,10 @@ export default class Polyfill {
 			});
 		});
 
-		this.cache.files.forEach((file: HTMLElement, address: string) => {
-			this.dispatchEvent(file, 'remove', { address }, () => {
-				this.renderFrame(() => {
-					this.options.root.removeChild(file);
-					this.cache.files.delete(address);
-				});
+		this.cache.files.forEach((file, address) => {
+			file && this.dispatchEvent(file, 'remove', { address }, () => {
+				this.renderFrame(() => this.options.root.removeChild(file));
+				this.cache.files.delete(address);
 			});
 		});
 	}
@@ -112,7 +108,7 @@ export default class Polyfill {
 		elements.forEach(this.processElement.bind(this));
 	}
 
-	private processElement(element: HTMLElement): void {
+	private processElement(element: SVGUseElement): void {
 		const value = element.getAttribute('href') || element.getAttribute('xlink:href');
 
 		if (value && !this.cache.elements.has(element)) {
@@ -156,7 +152,7 @@ export default class Polyfill {
 			: identifier;
 	}
 
-	private dispatchEvent(element: HTMLElement, name: string, detail?: any, callback?: Function): void {
+	private dispatchEvent(element: Element, name: string, detail?: any, callback?: Function): void {
 		const event = window.document.createEvent('CustomEvent');
 		event.initCustomEvent(`${this.options.namespace}.${name}`, true, true, detail);
 
@@ -171,7 +167,7 @@ export default class Polyfill {
 		window.requestAnimationFrame(callback.bind(this));
 	}
 
-	private setLinkAttribute(element: HTMLElement, value: string): void {
+	private setLinkAttribute(element: SVGUseElement, value: string): void {
 		element.hasAttribute('href') && element.setAttribute('href', value);
 		element.hasAttribute('xlink:href') && element.setAttribute('xlink:href', value);
 	}

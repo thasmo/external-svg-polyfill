@@ -6,19 +6,20 @@
 		"moduleResolution": "node",
 		"newLine": "lf",
 		"rootDir": "src/",
+		"incremental": true,
 		"declaration": true,
 		"allowJs": false,
 		"checkJs": false,
+		"strict": true,
 		"removeComments": true,
-		"strictNullChecks": true,
-		"alwaysStrict": true,
 		"allowUnreachableCode": true,
-		"noImplicitAny": true,
 		"noUnusedParameters": false,
 		"noUnusedLocals": true,
 		"noEmitOnError": true,
-		"noImplicitThis": true,
 		"noFallthroughCasesInSwitch": true,
-		"preserveWatchOutput": true
+		"forceConsistentCasingInFileNames": true,
+		"stripInternal": true,
+		"esModuleInterop": true,
+		"noImplicitReturns": true
 	}
 }

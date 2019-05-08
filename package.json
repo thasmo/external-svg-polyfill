@@ -29,12 +29,12 @@
     "prepare": "concurrently \"tsc\" \"rollup --config\""
   },
   "devDependencies": {
-    "browser-sync": "^2.24.7",
-    "concurrently": "^4.0.1",
-    "rollup": "^0.66.2",
-    "rollup-plugin-typescript": "^1.0.0",
+    "browser-sync": "^2.26.5",
+    "concurrently": "^4.1.0",
+    "rollup": "^1.11.3",
+    "rollup-plugin-typescript": "^1.0.1",
     "tslib": "^1.9.3",
-    "typescript": "^3.1.1"
+    "typescript": "^3.4.5"
   },
   "files": [
     "browser/",
