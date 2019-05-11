@@ -40,5 +40,7 @@
   "files": [
     "browser/",
     "module/"
-  ]
+  ],
+  "unpkg": "browser/bundle.min.js",
+  "jsdelivr": "browser/bundle.min.js"
 }
