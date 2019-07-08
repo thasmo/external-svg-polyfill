@@ -33,7 +33,7 @@ npm install @thasmo/external-svg-polyfill
 
 [**CDN**][cdn]
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@2/browser/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@thasmo/external-svg-polyfill@3/browser/bundle.min.js"></script>
 ```
 
 ## Usage
