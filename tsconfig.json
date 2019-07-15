@@ -6,6 +6,7 @@
 		"moduleResolution": "node",
 		"newLine": "lf",
 		"rootDir": "src/",
+		"tsBuildInfoFile": "tsconfig.tsbuildinfo",
 		"incremental": true,
 		"declaration": true,
 		"allowJs": false,
