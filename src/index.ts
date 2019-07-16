@@ -1,1 +1,1 @@
-export {default as default} from './core/Polyfill';
+export { default } from './core/Polyfill';
