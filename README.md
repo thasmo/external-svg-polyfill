@@ -136,6 +136,12 @@ Some alternatives exist and, in fact, `external-svg-polyfill` was greatly inspir
 [![BrowserStack](https://www.browserstack.com/images/mail/browserstack-logo-footer.png)](https://www.browserstack.com/)  
 [**BrowserStack**](https://www.browserstack.com/) loves open source and provides free manual and automated testing for this project! ❤️
 
+## License
+
+[MIT license](LICENSE.md)
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fthasmo%2Fexternal-svg-polyfill.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fthasmo%2Fexternal-svg-polyfill?ref=badge_large)
+
 ---
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
