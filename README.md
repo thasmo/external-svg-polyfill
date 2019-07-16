@@ -1,4 +1,5 @@
 # External SVG Polyfill [![npm][npm-badge]][npm] [![CDN][cdn-badge]][cdn]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fthasmo%2Fexternal-svg-polyfill.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fthasmo%2Fexternal-svg-polyfill?ref=badge_shield)
 > Small and basic polyfill to support referencing [external SVG files](https://css-tricks.com/svg-use-external-source/)
 
 Browser like `IE9-IE11`, `Edge12`, `Safari 5.1-6`, or `UCWeb11`
@@ -144,3 +145,7 @@ Some alternatives exist and, in fact, `external-svg-polyfill` was greatly inspir
 [npm-badge]: https://img.shields.io/npm/v/@thasmo/external-svg-polyfill.svg
 [cdn]: https://www.jsdelivr.com/package/npm/@thasmo/external-svg-polyfill
 [cdn-badge]: https://data.jsdelivr.com/v1/package/npm/@thasmo/external-svg-polyfill/badge?style=rounded
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fthasmo%2Fexternal-svg-polyfill.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fthasmo%2Fexternal-svg-polyfill?ref=badge_large)
