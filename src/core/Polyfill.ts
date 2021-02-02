@@ -67,6 +67,8 @@ export default class Polyfill {
 		this.observer.observe(this.options.context, {
 			childList: true,
 			subtree: true,
+			attributes: true,
+			attributeFilter: ['href', 'xlink:href'],
 		});
 
 		window.addEventListener('resize', this.handler.viewportChange);
