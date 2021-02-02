@@ -15,7 +15,7 @@ export default class Polyfill {
 	};
 
 	private defaults: Options = {
-		target: 'svg use[href], svg use[xlink\\:href]',
+		target: 'svg use',
 		context: window.document.body || window.document.documentElement,
 		root: window.document.body || window.document.documentElement,
 		run: true,
