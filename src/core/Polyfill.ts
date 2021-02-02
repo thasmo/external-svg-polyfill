@@ -107,13 +107,13 @@ export default class Polyfill {
 			? [].slice.call(this.options.context.querySelectorAll(this.options.target))
 			: this.options.target;
 
-		Array.from(elements).forEach(this.processElement.bind(this));
+		elements.forEach(this.processElement.bind(this));
 	}
 
 	private processElement(element: SVGUseElement): void {
 		const value = element.getAttribute('href') || element.getAttribute('xlink:href');
 
-		if (value && !value.startsWith('#') && !this.cache.elements.has(element)) {
+		if (value && value.indexOf('#') !== 0 && !this.cache.elements.has(element)) {
 			this.parser.href = value;
 
 			if (this.process || (this.options.crossdomain && window.location.origin !== this.parser.origin)) {
