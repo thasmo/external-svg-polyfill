@@ -175,15 +175,24 @@ export default class Polyfill {
 	}
 
 	private prefixValues(file: HTMLElement, prefix: string): void {
-		[].slice.call(file.querySelectorAll('[id]')).forEach((reference: HTMLElement) => {
-			const value = reference.getAttribute('id')!;
+		const value = file.getAttribute('id')!;
+
+		if (value) {
 			const identifier = this.generateIdentifier(value, prefix);
+			file.setAttribute('id', identifier);
+		}
 
-			reference.setAttribute('id', identifier);
+		[].slice.call(file.querySelectorAll('[id]')).forEach((reference: HTMLElement) => {
+			const value = reference.getAttribute('id');
 
-			[].slice.call(file.querySelectorAll(`[fill="url(#${value})"]`)).forEach((referencee: HTMLElement) => {
-				referencee.setAttribute('fill', `url(#${identifier})`);
-			});
+			if (value) {
+				const identifier = this.generateIdentifier(value, prefix);
+				reference.setAttribute('id', identifier);
+
+				[].slice.call(file.querySelectorAll(`[fill="url(#${value})"]`)).forEach((referencee: HTMLElement) => {
+					referencee.setAttribute('fill', `url(#${identifier})`);
+				});
+			}
 		});
 	}
 
